@@ -11,7 +11,7 @@ using UnityEngine;
 public class PlatformDestroyer : MonoBehaviour {
 
     // point at which to deactivate (follows behind player)
-    public GameObject platformDestructionPoint;
+    private GameObject platformDestructionPoint;
 
     // the pool to return the object to
     private ObjectPooler objectPool;
@@ -20,23 +20,30 @@ public class PlatformDestroyer : MonoBehaviour {
     private int length;
 
     void Start () {
+        platformDestructionPoint = GameObject.Find("PlatformDestructionPoint");
 
         if (gameObject.name.Contains("Platform"))
         {
             // find the right object pooler using length
             length = (int)GetComponent<BoxCollider2D>().size.x;
             ObjectPooler = GameObject.Find("ObjectPooler " + length + "x1");
-            objectPool = ObjectPooler.GetComponent<ObjectPooler>();
-            platformDestructionPoint = GameObject.Find("PlatformDestructionPoint");
         }
         else if (gameObject.name.Contains("Coin"))
         {
             ObjectPooler = GameObject.Find("CoinPool");
-            objectPool = ObjectPooler.GetComponent<ObjectPooler>();
-            platformDestructionPoint = GameObject.Find("PlatformDestructionPoint");
+        }
+        else if (gameObject.name.Contains("Spikes"))
+        {
+            ObjectPooler = GameObject.Find("SpikePool");
+        }
+        else if (gameObject.name.Contains("Powerup1"))
+        {
+            ObjectPooler = GameObject.Find("PowerupPool");
         }
 
-	}
+        objectPool = ObjectPooler.GetComponent<ObjectPooler>();
+
+    }
 	
 
 	void Update () {

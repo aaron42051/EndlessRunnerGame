@@ -23,8 +23,14 @@ public class PlatformGenerator : MonoBehaviour {
     private float heightChange;
 
     private CoinGenerator coinGenerator;
-
     public float randomCoinThreshold;
+
+    public float randomSpikeThreshold;
+    public ObjectPooler spikePool;
+
+    public float powerupHeight;
+    public ObjectPooler powerupPool;
+    public float randomPowerupThreshold;
 
 
 	void Start () {
@@ -68,6 +74,16 @@ public class PlatformGenerator : MonoBehaviour {
                 heightChange = minHeight;
             }
 
+
+            // generate powerup in between platforms
+            if (Random.Range(0f, 100f) < randomPowerupThreshold)
+            {
+                GameObject newPowerup = powerupPool.ActivatePoolObject();
+
+                newPowerup.transform.position = transform.position + new Vector3(distanceBetween/2, powerupHeight, 0f);
+
+            }
+
             transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2)  + distanceBetween, heightChange, transform.position.z);
 
             GameObject newPlatform = objectPools[platformSelector].ActivatePoolObject();
@@ -82,7 +98,20 @@ public class PlatformGenerator : MonoBehaviour {
                 coinGenerator.SpawnCoins(new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), 4);
             }
 
-            // this is movement is moving the generator to the edge of the new platform
+            if (Random.Range(0f, 100f) < randomSpikeThreshold)
+            {
+                GameObject newSpike = spikePool.ActivatePoolObject();
+
+                float spikeXPosition = Random.Range(-platformWidths[platformSelector] / 2 + 1f, platformWidths[platformSelector] / 2 - 1f);
+
+                Vector3 spikePosition = new Vector3(spikeXPosition, 0.5f, 0f);
+
+                newSpike.transform.position = transform.position + spikePosition;
+                newSpike.transform.rotation = transform.rotation;
+                newSpike.SetActive(true);
+            }
+
+            // this is moving the generator to the edge of the new platform
             // prepping for the next platform to spawn
             transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2), transform.position.y, transform.position.z);
 

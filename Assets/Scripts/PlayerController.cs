@@ -31,11 +31,16 @@ public class PlayerController : MonoBehaviour {
     public Transform groundCheck;
     public float groundCheckRadius;
 
-    //private Collider2D myCollider;
 
     private Animator myAnimator;
 
     public GameManager gameManager;
+
+    public AudioSource jumpSound;
+    public AudioSource deathSound;
+
+    private PowerupManager powerupManager;
+
 
 	// get components attached to the object
 	void Start () {
@@ -55,6 +60,7 @@ public class PlayerController : MonoBehaviour {
         speedMilestoneCountStore = speedMilestoneCount;
         speedUpMilestoneStore = speedUpMilestone;
 
+        powerupManager = FindObjectOfType<PowerupManager>();
 	}
 	
 
@@ -77,13 +83,17 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
+            // jumping
             if (grounded)
             {
+                jumpSound.Play();
                 y = jumpForce;
                 jumping = true;
             }
+            // double jumping
             else if (canDoubleJump)
             {
+                jumpSound.Play();
                 jumpTimer = jumpTime;
                 jumping = true;
                 y = jumpForce;
@@ -125,10 +135,12 @@ public class PlayerController : MonoBehaviour {
     {
         if (collision.gameObject.tag == "deathbox")
         {
+            deathSound.Play();
             gameManager.RestartGame();
             playerSpeed = playerSpeedStore;
             speedMilestoneCount = speedMilestoneCountStore;
             speedUpMilestone = speedUpMilestoneStore;
+            powerupManager.ResetPowerups();
         }
     }
 }

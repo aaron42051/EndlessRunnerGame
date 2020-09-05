@@ -3,6 +3,8 @@ guid: f954b438a1fdb43db83ea54dc7bec79b
 TextureImporter:
   fileIDToRecycleName:
     21300000: spritesheet_items_0
+    21300002: powerup1
+    21300004: powerup2
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -93,13 +95,53 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: bc9ccf7dfe6984562acc6198e8fe7db8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: powerup1
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 424
+        width: 71
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5591cda89417484aa13253811d3b444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: powerup2
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 295
+        width: 71
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a98afa4f0541854eb0dce226527953c
       vertices: []
       indices: 
       edges: []

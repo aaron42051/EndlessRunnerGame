@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
 
     public DeathMenu deathMenu;
 
+    public bool powerupReset;
+
 	// Use this for initialization
 	void Start () {
         platformStartPoint = platformGenerator.position;
@@ -55,6 +57,8 @@ public class GameManager : MonoBehaviour {
 
         scoreManager.scoreCount = 0;
         scoreManager.isAlive = true;
+
+        powerupReset = true;
     }
 
     //public IEnumerator RestartGameCo()
