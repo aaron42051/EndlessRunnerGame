@@ -12,72 +12,53 @@ public class GameManager : MonoBehaviour {
 
     private ObjectPooler[] objectPoolers;
 
-    private ScoreManager scoreManager;
+    public ScoreManager scoreManager;
+
+    public PowerupManager powerupManager;
 
     public DeathMenu deathMenu;
 
     public bool powerupReset;
 
-	// Use this for initialization
 	void Start () {
         platformStartPoint = platformGenerator.position;
         playerStartPoint = player.transform.position;
-        scoreManager = FindObjectOfType<ScoreManager>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
-    public void RestartGame()
+    // stop tracking score, remove player, show death screen
+    public void GameOver()
     {
-        scoreManager.isAlive = false;
+        scoreManager.SetAlive(false);
         player.gameObject.SetActive(false);
-
-
         deathMenu.gameObject.SetActive(true);
-
-        //StartCoroutine("RestartGameCo");
     }
 
+    // reset the game environment to start a new game
     public void Reset()
     {
         deathMenu.gameObject.SetActive(false);
 
-        objectPoolers = FindObjectsOfType<ObjectPooler>();
-        for (int i = 0; i < objectPoolers.Length; i++)
-        {
-            objectPoolers[i].DeactivateAllPlatforms();
-        }
+        ClearAllObjects();
 
+        // reset player position
         player.transform.position = playerStartPoint;
         platformGenerator.position = platformStartPoint;
         player.gameObject.SetActive(true);
 
-        scoreManager.scoreCount = 0;
-        scoreManager.isAlive = true;
+        scoreManager.ResetScore();
 
         powerupReset = true;
     }
 
-    //public IEnumerator RestartGameCo()
-    //{
-    //    scoreManager.isAlive = false;
-    //    player.gameObject.SetActive(false);
-    //    yield return new WaitForSeconds(0.5f);
+    private void ClearAllObjects()
+    {
+        // get all object poolers and remove everything out of them
+        objectPoolers = FindObjectsOfType<ObjectPooler>();
+        for (int i = 0; i < objectPoolers.Length; i++)
+        {
+            objectPoolers[i].DeactivateAllObjects();
+        }
 
-    //    objectPoolers = FindObjectsOfType<ObjectPooler>();
-    //    for (int i = 0; i < objectPoolers.Length; i++)
-    //    {
-    //        objectPoolers[i].DeactivateAllPlatforms();
-    //    }
+    }
 
-    //    player.transform.position = playerStartPoint;
-    //    platformGenerator.position = platformStartPoint;
-    //    player.gameObject.SetActive(true);
-
-    //    scoreManager.scoreCount = 0;
-    //    scoreManager.isAlive = true;
-    //}
 }

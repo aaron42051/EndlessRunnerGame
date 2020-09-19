@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-    public PlayerController player;
-
+    private PlayerController player;
     private Vector3 playerPosition;
     private float distanceToMove;
 
@@ -17,7 +16,7 @@ public class CameraController : MonoBehaviour {
 
 	}
 	
-
+    // follow the player
 	void Update () {
 
         distanceToMove = player.transform.position.x - playerPosition.x;

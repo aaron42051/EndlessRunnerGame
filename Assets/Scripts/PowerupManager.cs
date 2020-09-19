@@ -2,81 +2,160 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// script for controlling power up effects
 public class PowerupManager : MonoBehaviour {
 
-    private bool doublePoints;
-    private bool safeMode;
 
-    private bool powerupActive;
+    // fields affected by powerups
+    private bool safeMode = false;
 
-    private float powerupLengthCounter;
+    // managers affected by powerups
+    public ScoreManager scoreManager;
 
-    private ScoreManager scoreManager;
-    private PlatformGenerator platformGenerator;
+    public ObjectGenerator objectGenerator;
 
-    private float normalPointsPerSecond;
-    private float normalSpikeThreshold;
+    public ObjectPooler spikePooler;
 
-    private ObjectPooler spikePooler;
+    public GameManager gameManager;
 
-    private GameManager gameManager;
+    private List<PowerupTimer> powerupTimers;
 
-    // Use this for initialization
+    class PowerupTimer
+    {
+        private float currentTime;
+        private Powerup.PowerupType power;
+
+        public PowerupTimer(float t, Powerup.PowerupType p)
+        {
+            currentTime = t;
+            power = p;
+        }
+
+        public float GetTimer()
+        {
+            return currentTime;
+        }
+
+        public Powerup.PowerupType GetPower()
+        {
+            return power;
+        }
+
+        public void SetTimer(float time)
+        {
+            currentTime = time;
+        }
+    }
+
+    // get the scripts from the objects
     void Start () {
-        scoreManager = FindObjectOfType<ScoreManager>();
-        platformGenerator = FindObjectOfType<PlatformGenerator>();
-        spikePooler = GameObject.Find("SpikePool").GetComponent<ObjectPooler>();
-        gameManager = FindObjectOfType<GameManager>();
+        powerupTimers = new List<PowerupTimer>();
 	}
 	
-	// Update is called once per frame
+	// Run all powerup timers down
 	void Update () {
-		if (powerupActive)
+
+        if (powerupTimers.Count > 0)
         {
-            powerupLengthCounter -= Time.deltaTime;
+            for (int i = 0; i < powerupTimers.Count;)
+            {
+                PowerupTimer timer = powerupTimers[i];
 
-            if (gameManager.powerupReset)
-            {
-                powerupLengthCounter = 0;
-                gameManager.powerupReset = false;
+                timer.SetTimer(timer.GetTimer() - Time.deltaTime);
+                if (timer.GetTimer() <= 0)
+                {
+                    powerupTimers.Remove(timer);
+                    DeactivatePowerup(timer.GetPower());
+                }
+                else
+                {
+                    i += 1;
+                }
             }
 
-            if (doublePoints)
-            {
-                scoreManager.pointsPerSecond = normalPointsPerSecond * 2; // only do this once? this will currently double the pps again if another power up is picked up
-                scoreManager.shouldDouble = true;
-            }
-
-            if (safeMode)
-            {
-                platformGenerator.randomSpikeThreshold = 0;
-                spikePooler.DeactivateAllPlatforms();
-            }
-            
-            if (powerupLengthCounter <= 0)
-            {
-                ResetPowerups();
-            }
         }
-	}
 
-    public void ActivatePowerup(bool points, bool safe, float time)
+    }
+
+
+    public bool GetSafeMode()
     {
-        doublePoints = points;
-        safeMode = safe;
-        powerupLengthCounter = time;
+        return safeMode;
+    }
 
-        normalPointsPerSecond = scoreManager.pointsPerSecond;
-        normalSpikeThreshold = platformGenerator.randomSpikeThreshold;
+    public void ActivatePowerup(Powerup.PowerupType power, float time)
+    {
 
-        powerupActive = true;
+        switch(power)
+        {
+            case Powerup.PowerupType.DoublePoints:
+                scoreManager.MultiplyScoreMultiplier(2);
+                powerupTimers.Add(new PowerupTimer(time, power));
+                break;
+
+            case Powerup.PowerupType.SafeMode:
+                // if safe mode is already on, refresh the timer
+                if (safeMode)
+                {
+                    foreach(PowerupTimer timer in powerupTimers)
+                    {
+                        if (timer.GetPower() == Powerup.PowerupType.SafeMode)
+                        {
+                            timer.SetTimer(time);
+                        }
+                    }
+                }
+                else
+                {
+                    spikePooler.DeactivateAllObjects();
+                    powerupTimers.Add(new PowerupTimer(time, power));
+                    safeMode = true;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void DeactivatePowerup(Powerup.PowerupType power)
+    {
+        switch(power)
+        {
+            case Powerup.PowerupType.DoublePoints:
+                scoreManager.MultiplyScoreMultiplier(0.5f);
+                break;
+            case Powerup.PowerupType.SafeMode:
+                safeMode = false;
+                break;
+            default:
+                break;
+        }
     }
 
     public void ResetPowerups()
     {
-        powerupActive = false;
-        scoreManager.pointsPerSecond = normalPointsPerSecond;
-        scoreManager.shouldDouble = false;
-        platformGenerator.randomSpikeThreshold = normalSpikeThreshold;
+        if (powerupTimers.Count > 0)
+        {
+            // loop through and undo the powerups
+            for (int i = 0; i < powerupTimers.Count;)
+            {
+                PowerupTimer timer = powerupTimers[i];
+
+                switch (timer.GetPower())
+                {
+                    case Powerup.PowerupType.DoublePoints:
+                        scoreManager.MultiplyScoreMultiplier(0.5f);
+                        break;
+                    case Powerup.PowerupType.SafeMode:
+                        safeMode = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            powerupTimers.Clear();
+        }
     }
+
+
 }

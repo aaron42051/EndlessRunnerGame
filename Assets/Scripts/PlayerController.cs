@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    [Header("Player Attributes")]
     public float playerSpeed;
     private float playerSpeedStore;
-    public float speedMultiplier;
-
-    public float speedUpMilestone;
-    private float speedUpMilestoneStore;
-
-    private float speedMilestoneCount;
-    private float speedMilestoneCountStore;
-
 
     public float jumpForce;
 
@@ -23,9 +16,21 @@ public class PlayerController : MonoBehaviour {
     private bool jumping;
     private bool canDoubleJump;
 
+    [Header("Difficulty Progression")]
+    public float speedUpMultiplier;
+
+    public float speedUpMilestone;
+    private float speedUpMilestoneStore;
+
+    private float speedMilestoneCount;
+    private float speedMilestoneCountStore;
+
+
+
 
     private Rigidbody2D myRigidbody;
 
+    [Header("Grounded Check")]
     public bool grounded;
     public LayerMask groundLayer;
     public Transform groundCheck;
@@ -34,20 +39,18 @@ public class PlayerController : MonoBehaviour {
 
     private Animator myAnimator;
 
-    public GameManager gameManager;
-
+    [Header("Player Sound Effects")]
     public AudioSource jumpSound;
     public AudioSource deathSound;
 
-    private PowerupManager powerupManager;
+    [Header("Managers")]
+    public GameManager gameManager;
+    public PowerupManager powerupManager;
 
 
 	// get components attached to the object
 	void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
-
-        //myCollider = GetComponent<Collider2D>();
-
         myAnimator = GetComponent<Animator>();
 
         jumpTimer = jumpTime;
@@ -59,26 +62,38 @@ public class PlayerController : MonoBehaviour {
         playerSpeedStore = playerSpeed;
         speedMilestoneCountStore = speedMilestoneCount;
         speedUpMilestoneStore = speedUpMilestone;
-
-        powerupManager = FindObjectOfType<PowerupManager>();
 	}
 	
 
 	void Update () {
 
-        //grounded = Physics2D.IsTouchingLayers(myCollider, groundLayer);
-
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
+        // add to the game every milestone
+        checkMilestone();
+
+        float y = checkJumpScenarios();
+
+        // continue to move to the right
+        myRigidbody.velocity = new Vector2(playerSpeed, y);
+
+        // set variables for animator
+        myAnimator.SetFloat("Speed", myRigidbody.velocity.x);
+        myAnimator.SetBool("Grounded", grounded);
+	}
+
+    void checkMilestone()
+    {
         if (transform.position.x > speedMilestoneCount)
         {
             speedMilestoneCount += speedUpMilestone;
-
-            speedUpMilestone = speedUpMilestone * speedMultiplier;
-            playerSpeed = playerSpeed * speedMultiplier;
+            speedUpMilestone = speedUpMilestone * speedUpMultiplier;
+            playerSpeed = playerSpeed * speedUpMultiplier;
         }
+    }
 
-        // automatically move right, detect jumps
+    float checkJumpScenarios()
+    {
         float y = myRigidbody.velocity.y;
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
@@ -102,7 +117,8 @@ public class PlayerController : MonoBehaviour {
 
         }
 
-        if ((Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) && jumping) {
+        if ((Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) && jumping)
+        {
 
             if (jumpTimer > 0)
             {
@@ -124,19 +140,15 @@ public class PlayerController : MonoBehaviour {
             canDoubleJump = true;
         }
 
-        myRigidbody.velocity = new Vector2(playerSpeed, y);
-
-        // set variables for animator
-        myAnimator.SetFloat("Speed", myRigidbody.velocity.x);
-        myAnimator.SetBool("Grounded", grounded);
-	}
+        return y;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "deathbox")
         {
             deathSound.Play();
-            gameManager.RestartGame();
+            gameManager.GameOver();
             playerSpeed = playerSpeedStore;
             speedMilestoneCount = speedMilestoneCountStore;
             speedUpMilestone = speedUpMilestoneStore;

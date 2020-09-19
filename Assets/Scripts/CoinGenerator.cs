@@ -8,7 +8,13 @@ public class CoinGenerator : MonoBehaviour {
 
     public float distanceBetweenCoins;
 
-
+    /* generate coins starting from the center of the platform
+     * 
+     * 1:              O
+     * 2:            O   O
+     * 3:          O   O   O  
+     * 4:        O   O   O   O
+     */
     public void SpawnCoins(Vector3 startPosition, int numCoins)
     {
         if (numCoins < 1)
@@ -18,8 +24,8 @@ public class CoinGenerator : MonoBehaviour {
 
         int coinCount = numCoins;
         int index = 0;
-        float offset = 0;
-        int flip = 1;
+        float offset = 0;         // for even numbered coin groups
+        int flip = 1;             // place coins on left vs right side of center
 
         if (coinCount % 2 == 0)
         {
@@ -42,8 +48,6 @@ public class CoinGenerator : MonoBehaviour {
             coinCount -= 1; 
             flip *= -1; 
         }
-
-        
 
     }
 }

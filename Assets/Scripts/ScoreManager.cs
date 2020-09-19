@@ -8,14 +8,13 @@ public class ScoreManager : MonoBehaviour {
     public Text scoreText;
     public Text highScoreText;
 
-    public float scoreCount;
-    public float highScoreCount;
+    private float scoreCount;
+    private float highScoreCount;
 
     public float pointsPerSecond;
 
-    public bool isAlive;
-
-    public bool shouldDouble;
+    private bool isAlive = true;
+    private float scoreMultiplier = 1;
 
     // Use this for initialization
     void Start () {
@@ -30,7 +29,7 @@ public class ScoreManager : MonoBehaviour {
 
         if (isAlive)
         {
-            scoreCount += pointsPerSecond * Time.deltaTime;
+            scoreCount += pointsPerSecond * Time.deltaTime * scoreMultiplier;
         }
 
         if (scoreCount > highScoreCount)
@@ -46,11 +45,22 @@ public class ScoreManager : MonoBehaviour {
 
     public void AddScore(int pointsToAdd)
     {
-        if (shouldDouble)
-        {
-            pointsToAdd += pointsToAdd;
-        }
+        scoreCount += pointsToAdd * scoreMultiplier;
+    }
 
-        scoreCount += pointsToAdd;
+    public void MultiplyScoreMultiplier(float multiplier)
+    {
+        scoreMultiplier *= multiplier;
+    }
+
+    public void SetAlive(bool alive)
+    {
+        isAlive = alive;
+    }
+
+    public void ResetScore()
+    {
+        scoreCount = 0;
+        isAlive = true;
     }
 }

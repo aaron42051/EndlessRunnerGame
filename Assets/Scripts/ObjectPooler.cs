@@ -19,7 +19,7 @@ public class ObjectPooler : MonoBehaviour {
         availablePool = new Stack<GameObject>();
 
 
-        // fill in the rest of the pool
+        // fill the pool with objects
         for (int i = inUsePool.Count; i < poolCount; i++)
         {
             GameObject newPoolObj = Instantiate(poolObject);
@@ -63,7 +63,7 @@ public class ObjectPooler : MonoBehaviour {
 
     }
 
-    public void DeactivateAllPlatforms()
+    public void DeactivateAllObjects()
     {
         while(inUsePool.Count > 0)
         {

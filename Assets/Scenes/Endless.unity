@@ -374,7 +374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe7112c35cce4fb78ead5de54949903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -399,7 +398,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8.680227
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -422,7 +421,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.22, y: 3.73, z: -15}
+  m_LocalPosition: {x: 7.8, y: 6.76, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1086886071}
@@ -964,7 +963,7 @@ GameObject:
   - component: {fileID: 771869096}
   - component: {fileID: 771869097}
   m_Layer: 0
-  m_Name: ObjectPooler 7x1
+  m_Name: Platform 7x1 Pooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -981,7 +980,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1236692006}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &771869097
 MonoBehaviour:
@@ -1005,7 +1004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 792154793}
   m_Layer: 0
-  m_Name: PlatformDestructionPoint
+  m_Name: ObjectDestructionPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1034,7 +1033,7 @@ GameObject:
   - component: {fileID: 808892684}
   - component: {fileID: 808892685}
   m_Layer: 0
-  m_Name: ObjectPooler 5x1
+  m_Name: Platform 5x1 Pooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1051,7 +1050,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1236692006}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &808892685
 MonoBehaviour:
@@ -1278,19 +1277,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 8
-  speedMultiplier: 1.1
-  speedUpMilestone: 50
   jumpForce: 12
   jumpTime: 0.2
+  speedUpMultiplier: 1.1
+  speedUpMilestone: 50
   grounded: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
   groundCheck: {fileID: 681131973}
   groundCheckRadius: 0.1
-  gameManager: {fileID: 2124133549}
   jumpSound: {fileID: 1640817318}
   deathSound: {fileID: 588942259}
+  gameManager: {fileID: 2124133549}
+  powerupManager: {fileID: 1492404420}
 --- !u!95 &852128224
 Animator:
   serializedVersion: 3
@@ -1332,7 +1332,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 853322540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.91, y: -5.61, z: 0}
+  m_LocalPosition: {x: 0.83, y: -9.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -1373,7 +1373,7 @@ GameObject:
   - component: {fileID: 891890697}
   - component: {fileID: 891890698}
   m_Layer: 0
-  m_Name: ObjectPooler 3x1
+  m_Name: Platform 3x1 Pooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1390,7 +1390,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1236692006}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &891890698
 MonoBehaviour:
@@ -1899,6 +1899,36 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 961415658}
   m_CullTransparentMesh: 0
+--- !u!1 &1028058459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028058460}
+  m_Layer: 0
+  m_Name: PowerupPools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1028058460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1028058459}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.99, y: 1.46, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2140596112}
+  - {fileID: 1837630563}
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1034597473
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,11 +1976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1898562206}
   highScoreText: {fileID: 2121522197}
-  scoreCount: 0
-  highScoreCount: 0
   pointsPerSecond: 5
-  isAlive: 1
-  shouldDouble: 0
 --- !u!1 &1086480002
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,7 +2055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1086886071}
   m_Layer: 0
-  m_Name: PlatformGenerationPoint
+  m_Name: ObjectGenerationPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2208,7 +2234,7 @@ GameObject:
   - component: {fileID: 1225177286}
   - component: {fileID: 1225177287}
   m_Layer: 0
-  m_Name: ObjectPooler 9x1
+  m_Name: Platform 9x1 Pooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2249,7 +2275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1236692006}
   m_Layer: 0
-  m_Name: ObjectPools
+  m_Name: Platform Pools
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2265,9 +2291,9 @@ Transform:
   m_LocalPosition: {x: 9, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 771869096}
   - {fileID: 891890697}
   - {fileID: 808892684}
+  - {fileID: 771869096}
   - {fileID: 1225177286}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -2733,6 +2759,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d7caa93a95c5e4086a3e4fe5d5a491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreManager: {fileID: 1034597475}
+  objectGenerator: {fileID: 2012202740}
+  spikePooler: {fileID: 1514364175}
+  gameManager: {fileID: 2124133549}
 --- !u!1 &1513765689
 GameObject:
   m_ObjectHideFlags: 0
@@ -2866,7 +2896,7 @@ GameObject:
   - component: {fileID: 1514364176}
   - component: {fileID: 1514364175}
   m_Layer: 0
-  m_Name: SpikePool
+  m_Name: Spikes Pooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3167,7 +3197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1613971086}
   m_Layer: 0
-  m_Name: Platforms
+  m_Name: Starting Platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3322,7 +3352,7 @@ GameObject:
   - component: {fileID: 1657112102}
   - component: {fileID: 1657112103}
   m_Layer: 0
-  m_Name: CoinPool
+  m_Name: Coin Pooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3504,6 +3534,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1837630562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1837630563}
+  - component: {fileID: 1837630564}
+  m_Layer: 0
+  m_Name: SafeModePowerup Pooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1837630563
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1837630562}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1028058460}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1837630564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1837630562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e57b84ab7824644a61b650fe2d5bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolObject: {fileID: 1972635227953250, guid: 63adb0ed44a2b614289ed1317dddc171, type: 2}
+  poolCount: 3
 --- !u!1 &1837824079
 GameObject:
   m_ObjectHideFlags: 0
@@ -3741,7 +3813,7 @@ GameObject:
   - component: {fileID: 2012202741}
   - component: {fileID: 2012202740}
   m_Layer: 0
-  m_Name: PlatformGenerator
+  m_Name: ObjectGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3761,18 +3833,22 @@ MonoBehaviour:
   generationPoint: {fileID: 1086886071}
   distanceBetweenMin: 3
   distanceBetweenMax: 5
-  objectPools:
+  platformPools:
   - {fileID: 891890698}
   - {fileID: 808892685}
   - {fileID: 771869097}
   - {fileID: 1225177287}
   maxHeightPoint: {fileID: 894130807}
   maxHeightChange: 5
-  randomCoinThreshold: 50
-  randomSpikeThreshold: 70
+  coinGenerator: {fileID: 586972602}
+  randomCoinThreshold: 30
   spikePool: {fileID: 1514364175}
+  randomSpikeThreshold: 10
+  powerupManager: {fileID: 1492404420}
+  powerupPools:
+  - {fileID: 2140596111}
+  - {fileID: 1837630564}
   powerupHeight: 3
-  powerupPool: {fileID: 2140596111}
   randomPowerupThreshold: 25
 --- !u!4 &2012202741
 Transform:
@@ -3781,7 +3857,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2012202739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: 0, z: 0}
+  m_LocalPosition: {x: 12.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 894130807}
@@ -3911,7 +3987,7 @@ GameObject:
   - component: {fileID: 2124133550}
   - component: {fileID: 2124133549}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3930,6 +4006,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformGenerator: {fileID: 2012202741}
   player: {fileID: 852128223}
+  scoreManager: {fileID: 1034597475}
+  powerupManager: {fileID: 1492404420}
   deathMenu: {fileID: 696895426}
   powerupReset: 0
 --- !u!4 &2124133550
@@ -4016,7 +4094,7 @@ GameObject:
   - component: {fileID: 2140596112}
   - component: {fileID: 2140596111}
   m_Layer: 0
-  m_Name: PowerupPool
+  m_Name: DoublePointsPowerup Pooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4034,7 +4112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolObject: {fileID: 1378541210117502, guid: b96708e0f23d5234889aabac30d12671, type: 2}
-  poolCount: 1
+  poolCount: 3
 --- !u!4 &2140596112
 Transform:
   m_ObjectHideFlags: 0
@@ -4042,9 +4120,9 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2140596110}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.99, y: 1.46, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 1028058460}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
