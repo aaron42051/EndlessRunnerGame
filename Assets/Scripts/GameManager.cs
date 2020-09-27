@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
 
     public PowerupManager powerupManager;
 
+    public DifficultyManager difficultyManager;
+
     public DeathMenu deathMenu;
 
     public bool powerupReset;
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour {
         scoreManager.SetAlive(false);
         player.gameObject.SetActive(false);
         deathMenu.gameObject.SetActive(true);
+        difficultyManager.resetMilestones();
     }
 
     // reset the game environment to start a new game

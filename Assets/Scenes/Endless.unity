@@ -188,6 +188,50 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 179084757}
   m_CullTransparentMesh: 0
+--- !u!1 &300459822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 300459824}
+  - component: {fileID: 300459823}
+  m_Layer: 0
+  m_Name: DifficultyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &300459823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 300459822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450fb8078e95ce54ab566292f31b6d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 852128218}
+  speedUpMultiplier: 1.05
+  speedUpPointDistance: 100
+  scoreManager: {fileID: 1034597475}
+--- !u!4 &300459824
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 300459822}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.035445, y: 4.110736, z: 0.056662314}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &305189546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,8 +1323,6 @@ MonoBehaviour:
   playerSpeed: 8
   jumpForce: 12
   jumpTime: 0.2
-  speedUpMultiplier: 1.1
-  speedUpMilestone: 50
   grounded: 0
   groundLayer:
     serializedVersion: 2
@@ -3987,7 +4029,7 @@ GameObject:
   - component: {fileID: 2124133550}
   - component: {fileID: 2124133549}
   m_Layer: 0
-  m_Name: Game Manager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4008,6 +4050,7 @@ MonoBehaviour:
   player: {fileID: 852128223}
   scoreManager: {fileID: 1034597475}
   powerupManager: {fileID: 1492404420}
+  difficultyManager: {fileID: 300459823}
   deathMenu: {fileID: 696895426}
   powerupReset: 0
 --- !u!4 &2124133550

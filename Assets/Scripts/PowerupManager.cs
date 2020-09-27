@@ -137,7 +137,7 @@ public class PowerupManager : MonoBehaviour {
         if (powerupTimers.Count > 0)
         {
             // loop through and undo the powerups
-            for (int i = 0; i < powerupTimers.Count;)
+            for (int i = 0; i < powerupTimers.Count; i++)
             {
                 PowerupTimer timer = powerupTimers[i];
 

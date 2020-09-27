@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Player Attributes")]
     public float playerSpeed;
-    private float playerSpeedStore;
+    private float initialPlayerSpeed;
 
     public float jumpForce;
 
@@ -15,17 +15,6 @@ public class PlayerController : MonoBehaviour {
 
     private bool jumping;
     private bool canDoubleJump;
-
-    [Header("Difficulty Progression")]
-    public float speedUpMultiplier;
-
-    public float speedUpMilestone;
-    private float speedUpMilestoneStore;
-
-    private float speedMilestoneCount;
-    private float speedMilestoneCountStore;
-
-
 
 
     private Rigidbody2D myRigidbody;
@@ -57,20 +46,13 @@ public class PlayerController : MonoBehaviour {
         jumping = false;
         canDoubleJump = true;
 
-        speedMilestoneCount = speedUpMilestone;
-
-        playerSpeedStore = playerSpeed;
-        speedMilestoneCountStore = speedMilestoneCount;
-        speedUpMilestoneStore = speedUpMilestone;
+        initialPlayerSpeed = playerSpeed;
 	}
 	
 
 	void Update () {
 
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
-        // add to the game every milestone
-        checkMilestone();
 
         float y = checkJumpScenarios();
 
@@ -82,14 +64,9 @@ public class PlayerController : MonoBehaviour {
         myAnimator.SetBool("Grounded", grounded);
 	}
 
-    void checkMilestone()
+    public void MultiplySpeed(float multiplier)
     {
-        if (transform.position.x > speedMilestoneCount)
-        {
-            speedMilestoneCount += speedUpMilestone;
-            speedUpMilestone = speedUpMilestone * speedUpMultiplier;
-            playerSpeed = playerSpeed * speedUpMultiplier;
-        }
+        playerSpeed *= multiplier;
     }
 
     float checkJumpScenarios()
@@ -149,10 +126,10 @@ public class PlayerController : MonoBehaviour {
         {
             deathSound.Play();
             gameManager.GameOver();
-            playerSpeed = playerSpeedStore;
-            speedMilestoneCount = speedMilestoneCountStore;
-            speedUpMilestone = speedUpMilestoneStore;
+            playerSpeed = initialPlayerSpeed;
             powerupManager.ResetPowerups();
         }
     }
+
+
 }
