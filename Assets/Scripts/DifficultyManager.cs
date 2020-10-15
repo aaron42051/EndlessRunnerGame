@@ -9,51 +9,123 @@ public class DifficultyManager : MonoBehaviour {
 
     public float speedUpMultiplier;
 
-    public float speedUpPointDistance;
+    public float milestoneDistance;
     private float initialMilestoneDistance;
 
-    private float currentSpeedUpMilestone;
+    private float currentMilestoneDistance;
 
     public ScoreManager scoreManager;
 
+    private Milestones milestones;
+    private Dictionary<MilestoneType, float>[] milestoneList;
+    private int milestoneIndex = 0;
+
+    public ObjectGenerator objectGenerator;
+
+    private int count = 50;
+
     // Use this for initialization
     void Start () {
-        currentSpeedUpMilestone = speedUpPointDistance;
-        initialMilestoneDistance = speedUpPointDistance;
+        currentMilestoneDistance = milestoneDistance;
+        initialMilestoneDistance = milestoneDistance;
 
         playerController = player.GetComponent<PlayerController>();
+
+        milestones = new Milestones();
+        milestoneList = milestones.MilestoneList;
     }
 
     // Update is called once per frame
     void Update () {
         if (player.activeSelf)
         {
-            checkSpeedUpMilestone();
+            CheckSpeedUpMilestone();
         }
 
     }
 
-    void checkSpeedUpMilestone()
+    void CheckSpeedUpMilestone()
     {
 
-        // speed up milestones
-        if (player.transform.position.x > currentSpeedUpMilestone)
+        // if player passed a milestone point
+        if (player.transform.position.x > currentMilestoneDistance)
         {
-            Debug.Log("speeding up!");
-            Debug.Log(player.transform.position.x);
-            // set the next speed up point, increase distance to the next point, increase player speed
-            speedUpPointDistance = speedUpPointDistance * speedUpMultiplier;
-            currentSpeedUpMilestone += speedUpPointDistance;
-            playerController.MultiplySpeed(speedUpMultiplier);
-
-            // increase the rate of score gain as well
-            scoreManager.MultiplyScoreMultiplier(speedUpMultiplier);
+            AddNextMilestone();
         }
+
+        if (player.transform.position.x > count)
+        {
+            Debug.Log(player.transform.position.x);
+            count += 50;
+        }
+
     }
 
-    public void resetMilestones()
+    public void ResetMilestones()
     {
-        currentSpeedUpMilestone = initialMilestoneDistance;
-        speedUpPointDistance = initialMilestoneDistance;
+        currentMilestoneDistance = initialMilestoneDistance;
+        milestoneDistance = initialMilestoneDistance;
+    }
+
+    // get milestone metadata and activate the newest milestone
+    private void AddNextMilestone()
+    {
+        if (milestoneIndex < milestoneList.Length)
+        {
+            Dictionary<MilestoneType, float> currentMilestone = milestoneList[milestoneIndex];
+            milestoneIndex += 1;
+
+            foreach (KeyValuePair<MilestoneType, float> milestone in currentMilestone)
+            {
+                ActivateMilestone(milestone.Key, milestone.Value);
+            }
+        }
+        else
+        {
+            ActivateMilestone(MilestoneType.SPEED_UP, 1.1f);
+        }
+
+
+        currentMilestoneDistance += milestoneDistance;
+    }
+
+
+    // TODO:
+    // implement all milestone type changes
+
+    private void ActivateMilestone(MilestoneType type, float magnitude)
+    {
+        switch (type)
+        {
+            case MilestoneType.SPEED_UP:
+                playerController.MultiplySpeed(magnitude);
+                scoreManager.MultiplyScoreMultiplier(magnitude);
+                milestoneDistance *= magnitude;
+                Debug.Log("speed up");
+                break;
+
+            case MilestoneType.SPIKES:
+                objectGenerator.SetSpikesThreshold(magnitude);
+                Debug.Log("add spikes");
+                break;
+
+            case MilestoneType.HEIGHT_INCREASE:
+                objectGenerator.MultiplyHeightChange(magnitude);
+                Debug.Log("height increase");
+                break;
+
+            case MilestoneType.SMALLER_PLATFORM:
+                objectGenerator.AddUnlockedPlatform(1);
+                Debug.Log("smaller platform");
+                break;
+
+            case MilestoneType.ENEMIES_FALL_PLATFORM:
+                Debug.Log("activate platform change");
+                break;
+
+            default:
+                break;
+        }
+
     }
 }

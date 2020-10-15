@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\NewBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\BackgroundGenerator.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CoinGenerator.cs" />
     <Compile Include="Assets\Scripts\DeathMenu.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Assets\Scripts\ObjectDestroyer.cs" />
     <Compile Include="Assets\Scripts\ObjectGenerator.cs" />
     <Compile Include="Assets\Scripts\ObjectPooler.cs" />
+    <Compile Include="Assets\Scripts\Parallaxing.cs" />
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\PickupItem.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />

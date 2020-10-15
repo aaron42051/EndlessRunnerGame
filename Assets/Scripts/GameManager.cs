@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour {
     public Transform platformGenerator;
     private Vector3 platformStartPoint;
 
+    public Transform backgroundGenerator;
+    private Vector3 backgroundStartPoint;
+
     public PlayerController player;
     private Vector3 playerStartPoint;
 
@@ -33,7 +36,7 @@ public class GameManager : MonoBehaviour {
         scoreManager.SetAlive(false);
         player.gameObject.SetActive(false);
         deathMenu.gameObject.SetActive(true);
-        difficultyManager.resetMilestones();
+        difficultyManager.ResetMilestones();
     }
 
     // reset the game environment to start a new game
@@ -46,6 +49,7 @@ public class GameManager : MonoBehaviour {
         // reset player position
         player.transform.position = playerStartPoint;
         platformGenerator.position = platformStartPoint;
+        backgroundGenerator.position = backgroundStartPoint;
         player.gameObject.SetActive(true);
 
         scoreManager.ResetScore();

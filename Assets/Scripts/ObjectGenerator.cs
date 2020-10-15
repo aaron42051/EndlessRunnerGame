@@ -14,6 +14,7 @@ public class ObjectGenerator : MonoBehaviour {
 
     public ObjectPooler[] platformPools;
     private int platformSelector;
+    private int platformsUnlocked = 2;
     private float[] platformWidths;
 
 
@@ -44,7 +45,7 @@ public class ObjectGenerator : MonoBehaviour {
 
 	void Start () {
 
-        instantiateWidths();
+        InstantiateWidths();
 
         minHeight = transform.position.y;
         maxHeight = maxHeightPoint.position.y;
@@ -60,7 +61,8 @@ public class ObjectGenerator : MonoBehaviour {
         {
             distanceBetween = Random.Range(distanceBetweenMin, distanceBetweenMax);
 
-            platformSelector = Random.Range(0, platformPools.Length);
+            platformSelector = Random.Range(0, platformsUnlocked);
+
 
             heightChange = transform.position.y + Random.Range(-maxHeightChange, maxHeightChange);
 
@@ -72,18 +74,18 @@ public class ObjectGenerator : MonoBehaviour {
                 heightChange = minHeight;
             }
 
-            generatePowerup();
+            GeneratePowerup();
 
             // move generator (this) to new platform position and generate platform
             transform.position = new Vector3(transform.position.x + (platformWidths[platformSelector] / 2)  + distanceBetween, heightChange, transform.position.z);
 
-            generatePlatform();
+            GeneratePlatform();
 
-            generateCoins();
+            GenerateCoins();
 
             if (!powerupManager.GetSafeMode())
             {
-                generateSpikes();
+                GenerateSpikes();
             }
 
             // this is moving the generator to the edge of the new platform
@@ -93,7 +95,22 @@ public class ObjectGenerator : MonoBehaviour {
         }
     }
 
-    void instantiateWidths()
+    public void SetSpikesThreshold(float threshold)
+    {
+        randomSpikeThreshold = threshold;
+    }
+    
+    public void MultiplyHeightChange(float multiplier)
+    {
+        maxHeightChange *= multiplier;
+    }
+
+    public void AddUnlockedPlatform(int value)
+    {
+        platformsUnlocked += value;
+    }
+
+    void InstantiateWidths()
     {
         platformWidths = new float[platformPools.Length];
 
@@ -104,7 +121,7 @@ public class ObjectGenerator : MonoBehaviour {
         }
     }
 
-    void generatePowerup()
+    void GeneratePowerup()
     {
         // generate powerup in between platforms
         if (Random.Range(0f, 100f) < randomPowerupThreshold)
@@ -117,7 +134,7 @@ public class ObjectGenerator : MonoBehaviour {
         }
     }
 
-    void generateCoins()
+    void GenerateCoins()
     {
         // generate coins on top of the new platform
         if (Random.Range(0f, 100f) < randomCoinThreshold)
@@ -126,7 +143,7 @@ public class ObjectGenerator : MonoBehaviour {
         }
     }
 
-    void generateSpikes()
+    void GenerateSpikes()
     {
         if (Random.Range(0f, 100f) < randomSpikeThreshold)
         {
@@ -142,7 +159,7 @@ public class ObjectGenerator : MonoBehaviour {
         }
     }
 
-    void generatePlatform()
+    void GeneratePlatform()
     {
         GameObject newPlatform = platformPools[platformSelector].ActivatePoolObject();
         newPlatform.transform.position = transform.position;
