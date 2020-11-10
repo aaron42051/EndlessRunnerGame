@@ -24,18 +24,19 @@ public class ObjectGenerator : MonoBehaviour {
     public float maxHeightChange;
     private float heightChange;
 
+    [Header("Enemies")]
+    public ObjectPooler pincerPool;
+    public float randomPincerThreshold;
+
     [Header("Coins")]
-    // coins
     public CoinGenerator coinGenerator;
     public float randomCoinThreshold;
 
     [Header("Spikes")]
-    // spikes
     public ObjectPooler spikePool;
     public float randomSpikeThreshold;
 
     [Header("Powerups")]
-    // powerups
     public PowerupManager powerupManager;
     public ObjectPooler[] powerupPools;
     private int powerupSelector;
@@ -87,6 +88,8 @@ public class ObjectGenerator : MonoBehaviour {
             {
                 GenerateSpikes();
             }
+
+            GenerateEnemies();
 
             // this is moving the generator to the edge of the new platform
             // prepping for the next platform to spawn
@@ -145,18 +148,7 @@ public class ObjectGenerator : MonoBehaviour {
 
     void GenerateSpikes()
     {
-        if (Random.Range(0f, 100f) < randomSpikeThreshold)
-        {
-            GameObject newSpike = spikePool.ActivatePoolObject();
-
-            float spikeXPosition = Random.Range(-platformWidths[platformSelector] / 2 + 1f, platformWidths[platformSelector] / 2 - 1f);
-
-            Vector3 spikePosition = new Vector3(spikeXPosition, 0.5f, 0f);
-
-            newSpike.transform.position = transform.position + spikePosition;
-            newSpike.transform.rotation = transform.rotation;
-            newSpike.SetActive(true);
-        }
+        GenerateObjectOnPlatform(randomSpikeThreshold, spikePool);
     }
 
     void GeneratePlatform()
@@ -165,5 +157,26 @@ public class ObjectGenerator : MonoBehaviour {
         newPlatform.transform.position = transform.position;
         newPlatform.transform.rotation = transform.rotation;
         newPlatform.SetActive(true);
+    }
+
+    void GenerateEnemies()
+    {
+        GenerateObjectOnPlatform(randomPincerThreshold, pincerPool);
+    }
+
+    void GenerateObjectOnPlatform(float threshold, ObjectPooler pool)
+    {
+        if (Random.Range(0f, 100f) < threshold)
+        {
+            GameObject newObject = pool.ActivatePoolObject();
+
+            float objXPosition = Random.Range(-platformWidths[platformSelector] / 2 + 1f, platformWidths[platformSelector] / 2 - 1f);
+
+            Vector3 objPosition = new Vector3(objXPosition, 0.5f, 0f);
+
+            newObject.transform.position = transform.position + objPosition;
+            newObject.transform.rotation = transform.rotation;
+            newObject.SetActive(true);
+        }
     }
 }

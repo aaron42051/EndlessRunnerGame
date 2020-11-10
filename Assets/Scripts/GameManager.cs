@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
     public Transform platformGenerator;
     private Vector3 platformStartPoint;
 
-    public Transform backgroundGenerator;
+    public Transform background;
     private Vector3 backgroundStartPoint;
 
     public PlayerController player;
@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour {
 
     public DifficultyManager difficultyManager;
 
+    public HealthManager healthManager;
+
     public DeathMenu deathMenu;
 
     public bool powerupReset;
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
         platformStartPoint = platformGenerator.position;
         playerStartPoint = player.transform.position;
+        backgroundStartPoint = background.transform.position;
 	}
 
     // stop tracking score, remove player, show death screen
@@ -49,12 +52,14 @@ public class GameManager : MonoBehaviour {
         // reset player position
         player.transform.position = playerStartPoint;
         platformGenerator.position = platformStartPoint;
-        backgroundGenerator.position = backgroundStartPoint;
+        background.position = backgroundStartPoint;
         player.gameObject.SetActive(true);
 
         scoreManager.ResetScore();
 
         powerupReset = true;
+
+        healthManager.ResetHearts();
     }
 
     private void ClearAllObjects()

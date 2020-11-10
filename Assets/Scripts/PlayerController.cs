@@ -35,6 +35,18 @@ public class PlayerController : MonoBehaviour {
     [Header("Managers")]
     public GameManager gameManager;
     public PowerupManager powerupManager;
+    public HealthManager healthManager;
+
+    public int maxHealth;
+    private int currentHealth;
+
+    private enum Color
+    {
+        Green,
+        Blue
+    }
+
+    private Color playerCharacter = Color.Green;
 
 
 	// get components attached to the object
@@ -47,6 +59,8 @@ public class PlayerController : MonoBehaviour {
         canDoubleJump = true;
 
         initialPlayerSpeed = playerSpeed;
+
+        currentHealth = maxHealth;
 	}
 	
 
@@ -54,7 +68,7 @@ public class PlayerController : MonoBehaviour {
 
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        float y = checkJumpScenarios();
+        float y = CheckJumpScenarios();
 
         // continue to move to the right
         myRigidbody.velocity = new Vector2(playerSpeed, y);
@@ -62,6 +76,8 @@ public class PlayerController : MonoBehaviour {
         // set variables for animator
         myAnimator.SetFloat("Speed", myRigidbody.velocity.x);
         myAnimator.SetBool("Grounded", grounded);
+
+        CheckCharacterSwitch();
 	}
 
     public void MultiplySpeed(float multiplier)
@@ -69,7 +85,23 @@ public class PlayerController : MonoBehaviour {
         playerSpeed *= multiplier;
     }
 
-    float checkJumpScenarios()
+    public void TakeHit()
+    {
+        // lose health here
+        deathSound.Play();
+        currentHealth -= 1;
+        if (currentHealth >= 0)
+        {
+            healthManager.LoseHeart(currentHealth);
+
+            if (currentHealth == 0)
+            {
+                gameManager.GameOver();
+            }
+        }
+    }
+
+    float CheckJumpScenarios()
     {
         float y = myRigidbody.velocity.y;
 
@@ -120,14 +152,31 @@ public class PlayerController : MonoBehaviour {
         return y;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "deathbox")
+        if (collision.gameObject.tag == "Deathbox")
         {
             deathSound.Play();
             gameManager.GameOver();
             playerSpeed = initialPlayerSpeed;
             powerupManager.ResetPowerups();
+        }
+    }
+
+    void CheckCharacterSwitch ()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (playerCharacter == Color.Green)
+            {
+                playerCharacter = Color.Blue;
+                myAnimator.runtimeAnimatorController = Resources.Load("Animators/Blue_Player") as RuntimeAnimatorController;
+            }
+            else
+            {
+                playerCharacter = Color.Green;
+                myAnimator.runtimeAnimatorController = Resources.Load("Animators/Player") as RuntimeAnimatorController;
+            }
         }
     }
 
