@@ -71,4 +71,8 @@ public class ObjectPooler : MonoBehaviour {
         }
     }
 
+    public Queue<GameObject> GetInUsePool()
+    {
+        return inUsePool;
+    }
 }

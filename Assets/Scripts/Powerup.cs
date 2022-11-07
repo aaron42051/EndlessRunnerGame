@@ -8,7 +8,8 @@ public class Powerup : MonoBehaviour {
     public enum PowerupType
     {
         DoublePoints,
-        SafeMode
+        SafeMode,
+        Lightning
     }
 
 

@@ -37,6 +37,9 @@ public class PlayerController : MonoBehaviour {
     public PowerupManager powerupManager;
     public HealthManager healthManager;
 
+    [Header("Object Pools")]
+    public ObjectPooler lazerPool;
+
     public int maxHealth;
     private int currentHealth;
 
@@ -78,6 +81,8 @@ public class PlayerController : MonoBehaviour {
         myAnimator.SetBool("Grounded", grounded);
 
         CheckCharacterSwitch();
+
+        CheckForAttack();
 	}
 
     public void MultiplySpeed(float multiplier)
@@ -99,6 +104,12 @@ public class PlayerController : MonoBehaviour {
                 gameManager.GameOver();
             }
         }
+    }
+
+    public void ResetPlayer()
+    {
+        currentHealth = maxHealth;
+        playerCharacter = Color.Green;
     }
 
     float CheckJumpScenarios()
@@ -169,6 +180,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (playerCharacter == Color.Green)
             {
+
                 playerCharacter = Color.Blue;
                 myAnimator.runtimeAnimatorController = Resources.Load("Animators/Blue_Player") as RuntimeAnimatorController;
             }
@@ -180,5 +192,15 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void CheckForAttack()
+    {
+        if(playerCharacter == Color.Blue)
+        {
+            if (Input.GetKeyDown(KeyCode.X)) {
+                GameObject newLazer = lazerPool.ActivatePoolObject();
 
+                newLazer.transform.position = transform.position;
+            }
+        }
+    }
 }

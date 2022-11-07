@@ -1,10 +1,12 @@
 fileFormatVersion: 2
-guid: d42ac88142714d2438deaa61efee94d0
+guid: f954b438a1fdb43db83ea54dc7bec79b
 TextureImporter:
   fileIDToRecycleName:
-    21300000: spritesheet_hud_0
-    21300002: spritesheet_hud_1
-    21300004: spritesheet_hud_2
+    21300000: coin_sprite
+    21300002: green_powerup_sprite
+    21300004: blue_powerup_sprite
+    21300006: yellow_powerup_sprite
+    21300008: powerup_orange_sprite
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -34,7 +36,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -63,7 +65,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -74,7 +76,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -85,7 +87,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: iPhone
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -96,7 +98,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -109,61 +111,101 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spritesheet_hud_0
+      name: coin_sprite
       rect:
         serializedVersion: 2
-        x: 15
-        y: 531
-        width: 95
-        height: 82
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 672
+        y: 32
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bbbff3b48433fc4ea7cada5d24961c3
+      spriteID: bc9ccf7dfe6984562acc6198e8fe7db8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_hud_1
+      name: green_powerup_sprite
       rect:
         serializedVersion: 2
-        x: 13
-        y: 786
-        width: 96
-        height: 83
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 668
+        y: 424
+        width: 71
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a55aa9993bf17245accd64643df86f6
+      spriteID: e5591cda89417484aa13253811d3b444
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_hud_2
+      name: blue_powerup_sprite
       rect:
         serializedVersion: 2
-        x: 15
-        y: 658
-        width: 95
-        height: 83
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 668
+        y: 295
+        width: 71
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84e206e97099773428fe757bd6963c3b
+      spriteID: 5a98afa4f0541854eb0dce226527953c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: yellow_powerup_sprite
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 168
+        width: 70
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 357688b89f821d34e9ca955f195d0abc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: powerup_orange_sprite
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 39
+        width: 70
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21032d86d2aee9044944d7db7eff4d3a
       vertices: []
       indices: 
       edges: []
@@ -171,7 +213,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 150f570f04da47841b975fdf90b0328e
+    spriteID: b5ca032ddcf324e0eafaefff8b49ccb2
     vertices: []
     indices: 
     edges: []

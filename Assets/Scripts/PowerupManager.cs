@@ -16,6 +16,10 @@ public class PowerupManager : MonoBehaviour {
 
     public ObjectPooler spikePooler;
 
+    public ObjectPooler lightningPooler;
+
+    public ObjectPooler enemyPooler;
+
     public GameManager gameManager;
 
     private List<PowerupTimer> powerupTimers;
@@ -112,6 +116,9 @@ public class PowerupManager : MonoBehaviour {
                     safeMode = true;
                 }
                 break;
+            case Powerup.PowerupType.Lightning:
+                GenerateLightning();
+                break;
             default:
                 break;
         }
@@ -157,5 +164,21 @@ public class PowerupManager : MonoBehaviour {
         }
     }
 
+
+    public void GenerateLightning()
+    {
+        // get all enemies currently in use and spawn lightning above them
+        Queue<GameObject> enemyPool = enemyPooler.GetInUsePool();
+
+        foreach(GameObject enemy in enemyPool)
+        {
+            GameObject l = lightningPooler.ActivatePoolObject();
+            float x = enemy.transform.position.x;
+            l.transform.position = new Vector3(x, 3.0f, 0);
+
+            // tell it to start moving
+            l.GetComponent<Lightning>().setDidHit(false);
+        }
+    }
 
 }
