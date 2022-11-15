@@ -7,10 +7,13 @@ public class Lightning : MonoBehaviour {
     public float speed;
     private bool didHit = false;
     private Animator myAnimator;
+    private AudioSource lazerSound;
 
     private void Start()
     {
         myAnimator = GetComponent<Animator>();
+        lazerSound = GameObject.Find("Lazer Sound").GetComponent<AudioSource>();
+        lazerSound.Play();
     }
 
     // move straight down until collision
@@ -25,8 +28,6 @@ public class Lightning : MonoBehaviour {
     // on collision, play the animation then disappear
     public IEnumerator OnHit()
     {
-
-        Debug.Log("On hit");
 
         setDidHit(true);
 

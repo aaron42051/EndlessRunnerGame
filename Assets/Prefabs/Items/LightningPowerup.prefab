@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 58285706076445722}
   - component: {fileID: 114016105874478430}
   - component: {fileID: 114832133452736818}
+  - component: {fileID: 114451254560819366}
   m_Layer: 0
   m_Name: LightningPowerup
   m_TagString: Untagged
@@ -70,6 +71,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectDestructionPoint: {fileID: 0}
+--- !u!114 &114451254560819366
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1678942150150802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285e51a22b52c486087ebc82565adadf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreToGive: 0
+  soundEffectName: Lazer Sound
 --- !u!114 &114832133452736818
 MonoBehaviour:
   m_ObjectHideFlags: 1

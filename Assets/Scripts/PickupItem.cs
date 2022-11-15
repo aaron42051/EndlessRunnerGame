@@ -8,29 +8,31 @@ public class PickupItem : MonoBehaviour {
 
     private ScoreManager scoreManager;
 
-    private AudioSource coinSound;
+    private AudioSource soundEffect;
 
-	void Start () {
+    public string soundEffectName;
+
+    void Start () {
         scoreManager = FindObjectOfType<ScoreManager>();
-
-        coinSound = GameObject.Find("Coin Sound").GetComponent<AudioSource>();
-	}
+        soundEffect = GameObject.Find(soundEffectName).GetComponent<AudioSource>();
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.name == "Player")
         {
-            if (coinSound.isPlaying)
+            if (soundEffect.isPlaying)
             {
-                coinSound.Stop();
-                coinSound.Play();
+                soundEffect.Stop();
+                soundEffect.Play();
             } else
             {
-                coinSound.Play();
+                soundEffect.Play();
             }
 
             gameObject.SetActive(false);
             scoreManager.AddScore(scoreToGive);
         }
+
     }
 }

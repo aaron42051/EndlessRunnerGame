@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreToGive: 5
+  soundEffectName: Coin Sound
 --- !u!114 &114992766019664888
 MonoBehaviour:
   m_ObjectHideFlags: 1
